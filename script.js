@@ -100,7 +100,6 @@ $(function() {
       var res = _buy()
       if (res === 'wait'){
         clearInterval(timer)
-        _check('ticket')
       }
       if (res.indexOf('库存不足') != -1 || count === 10) {
         clearInterval(timer)
