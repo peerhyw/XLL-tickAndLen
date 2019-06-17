@@ -52,7 +52,6 @@ $(function() {
     jlTime.setHours(20)
     jlTime.setMinutes(30)
     jlTime.setSeconds(0)
-    jlTime = _timeFormat(jlTime)
     var buttonType = $('a#grabTicket').text()
     if (buttonType === '抢票') {
       excuteTask(beginTime, _loop, _buy)
