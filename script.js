@@ -46,15 +46,15 @@ $(function() {
     var now = new Date()
     var beginTime = new Date(now.getTime())
     var jlTime = new Date(now.getTime())
-    beginTime.setHours(20)
-    beginTime.setMinutes(0)
-    beginTime.setSeconds(0)
+    beginTime.setHours(19)
+    beginTime.setMinutes(59)
+    beginTime.setSeconds(59)
     jlTime.setHours(20)
-    jlTime.setMinutes(30)
-    jlTime.setSeconds(0)
+    jlTime.setMinutes(29)
+    jlTime.setSeconds(29)
     var buttonType = $('a#grabTicket').text()
     if (buttonType === '抢票') {
-      excuteTask(beginTime, _loop, _buy)
+      excuteTask(beginTime, _loop, _buy, 500)
     } else {
       excuteTask(jlTime, _loopJL)
     }
@@ -64,27 +64,29 @@ $(function() {
   function grabLencan () {
     var now = new Date()
     var beginTime = now
-    beginTime.setHours(20)
-    beginTime.setMinutes(0)
-    beginTime.setSeconds(0)
+    beginTime.setHours(19)
+    beginTime.setMinutes(59)
+    beginTime.setSeconds(57)
     if ($("span.sp_list_6a.kb").children("a").text().indexOf('生日会') != -1) {
-      excuteTask(beginTime, _loop, _orderBuy)
+      excuteTask(beginTime, _loop, _orderBuy, 200)
     }
   }
 
 
-  function excuteTask (beginTime, task, loopTask=null) {
+  function excuteTask (beginTime, task, loopTask=null, interval) {
     layer.msg('脚本开始倒计时，请勿关闭当前页面', {time: 5000})
     var endTime = new Date(beginTime.getTime())
-    endTime.setSeconds(endTime.getSeconds() + 10)
+    endTime.setMinutes(endTime.getMinutes() + 2)
+    endTime.setSeconds(0)
     beginTime = _timeFormat(beginTime)
     endTime = _timeFormat(endTime)
+    console.log(endTime)
     var timer = setInterval(function () {
       var now = _timeFormat(new Date())
       if (now >= beginTime) {
         clearInterval(timer)
         if (loopTask !== null) {
-          task(loopTask, endTime)
+          task(loopTask, endTime, interval)
         } else {
           task()
         }
@@ -101,7 +103,7 @@ $(function() {
       if (res === 'wait'){
         clearInterval(timer)
       }
-      if (res.indexOf('库存不足') != -1 || count === 10) {
+      if (res.indexOf('库存不足') != -1 || count === 20) {
         clearInterval(timer)
         layer.msg('遗憾...你的脸太黑了')
       }
@@ -110,7 +112,7 @@ $(function() {
   }
 
 
-  function _loop (_loopTask, endTime) {
+  function _loop (_loopTask, endTime, interval) {
     var msg = ''
     if (_loopTask.name == '_buy') {
       msg = '抢票ing...'
@@ -121,11 +123,11 @@ $(function() {
     var timer = setInterval(function () {
       var result = _loopTask()
       var now = _timeFormat(new Date())
-      if (now >= endTime || result === 'wait' || result.indexOf('不足') != -1 || result.indexOf('下架') != -1 || result.indexOf('停止') != -1) {
+      if (now >= endTime || result === 'wait') {
         clearInterval(timer)
         layer.msg('loop done (' + result + ')')
       }
-    }, 1000)
+    }, interval)
   }
 
 
