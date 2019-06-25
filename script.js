@@ -68,7 +68,7 @@ $(function() {
     beginTime.setMinutes(59)
     beginTime.setSeconds(57)
     if ($("span.sp_list_6a.kb").children("a").text().indexOf('生日会') != -1) {
-      excuteTask(beginTime, _loop, _orderBuy, 200)
+      excuteTask(beginTime, _loop, _orderBuy, 400)
     }
   }
 
@@ -97,18 +97,18 @@ $(function() {
 
   function _loopJL () {
     layer.msg('捡漏ing...')
-    var count = 0
+    var endTime = new Date()
+    endTime.setHours(21)
+    endTime.setHours(30)
+    endTime.setMinutes(0)
+    endTime = _timeFormat(endTime)
     var timer = setInterval(function () {
       var res = _buy()
-      if (res === 'wait'){
+      var now = _timeFormat(new Date())
+      if (now >= endTime || res === 'wait'){
         clearInterval(timer)
       }
-      if (res.indexOf('库存不足') != -1 || count === 20) {
-        clearInterval(timer)
-        layer.msg('遗憾...你的脸太黑了')
-      }
-      count++
-    }, 1000)
+    }, 3000)
   }
 
 
@@ -316,11 +316,11 @@ $(function() {
   
   // 抢票脚本
   var title = $("li.i_tit").text()
-  if (title.indexOf('星梦剧院') != -1) {
-    layer.msg(`已经加载抢票脚本，脚本将会在20:00:00开始尝试，
+  if (title.indexOf('公演') != -1 && !$("span.ic_cx").length) {
+    layer.msg(`已经加载抢票脚本，脚本将会在19:59:59开始尝试，
                请于抢票开始前两分钟左右点击抢票按钮，
                请确保网络通畅，点击抢票按钮后请勿关闭当前页面，
-               20:20:00 后转为捡漏脚本`,
+               20:20:00 后请刷新页面转为捡漏脚本`,
               {
                 time: 5000,
                 closeBtn: 1
@@ -349,7 +349,7 @@ $(function() {
     }
   }
   if (window.location.pathname == '/order/buy' && $("span.sp_list_6a.kb").children("a").text().indexOf('生日会') != -1) {
-    layer.msg(`已经加载抢冷餐脚本，脚本将会在20:00:00开始尝试，
+    layer.msg(`已经加载抢冷餐脚本，脚本将会在19:59:57开始尝试，
                请于抢票开始前两分钟左右点击抢冷餐按钮，
                请确保网络通畅，点击抢票按钮后请勿关闭当前页面，
                也可以选择手动提交订单，注意卡点提交`,
