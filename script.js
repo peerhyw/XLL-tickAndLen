@@ -7,7 +7,7 @@
 // @include      *://shop.48.cn/goods/item/*
 // @include      *://shop.48.cn/Goods/Item/*                                                                                        
 // @include      *://shop.48.cn/order/buy
-// @include      *://shop.48.cn/*
+// @include      *://shop.48.cn
 // @grant        none
 // @required     http://cdn.bootcss.com/jquery/3.4.1/jquery.min.js
 // ==/UserScript==
@@ -99,13 +99,14 @@ $(function() {
     layer.msg('捡漏ing...')
     var endTime = new Date()
     endTime.setHours(21)
-    endTime.setHours(30)
     endTime.setMinutes(0)
+    endTime.setSeconds(0)
     endTime = _timeFormat(endTime)
     var timer = setInterval(function () {
       var res = _buy()
+      layer.msg('捡漏中')
       var now = _timeFormat(new Date())
-      if (now >= endTime || res === 'wait'){
+      if (now >= endTime){
         clearInterval(timer)
       }
     }, 3000)
