@@ -21,6 +21,11 @@ $(function() {
   <option value="4">站票</option>
 </select>
 `
+
+  var infintyJL = `
+  <input type="checkbox" class=form-control id="infintyJL" style="width: 20px;height:20px;margin-left:10px;text-align: center;vertical-align: middle;">
+  <label for="infintyJL" style="text-align:center;vertical-align:middle;">捡到天亮</label>
+`
   
   var grabScript = `
 <script>
@@ -80,7 +85,6 @@ $(function() {
     endTime.setSeconds(0)
     beginTime = _timeFormat(beginTime)
     endTime = _timeFormat(endTime)
-    console.log(endTime)
     var timer = setInterval(function () {
       var now = _timeFormat(new Date())
       if (now >= beginTime) {
@@ -102,6 +106,9 @@ $(function() {
     endTime.setMinutes(0)
     endTime.setSeconds(0)
     endTime = _timeFormat(endTime)
+    if ($('#infintyJL').is(':checked')) {
+      endTime = '23:59:59'
+    }
     var timer = setInterval(function () {
       var res = _buy()
       layer.msg('捡漏中')
@@ -328,11 +335,12 @@ $(function() {
               })
     var grabButton = `<a href="javascript:void(0)" id="grabTicket" class="pink_sc" onclick="grabTicket()" style="background-color:#dc3545">抢票</button>`
     $("a#buy").parent().append(grabButton)
+    $("a#buy").parent().append(seatTypeSelect)
     
     if (now > '20:20:00') {
       $("a#grabTicket").text('捡漏')
+      $("a#buy").parent().append(infintyJL)
     }
-    $("a#buy").parent().append(seatTypeSelect)
   }
   
   // 冷餐脚本
