@@ -7,7 +7,7 @@
 // @include      *://shop.48.cn/goods/item/*
 // @include      *://shop.48.cn/Goods/Item/*                                                                                        
 // @include      *://shop.48.cn/order/buy
-// @include      *://shop.48.cn
+// @include      *://shop.48.cn/
 // @grant        none
 // @required     http://cdn.bootcss.com/jquery/3.4.1/jquery.min.js
 // ==/UserScript==
@@ -73,7 +73,7 @@ $(function() {
     beginTime.setMinutes(59)
     beginTime.setSeconds(57)
     if ($("span.sp_list_6a.kb").children("a").text().indexOf('生日会') != -1) {
-      excuteTask(beginTime, _loop, _orderBuy, 400)
+      excuteTask(beginTime, _loop, _orderBuy, 300)
     }
   }
 
